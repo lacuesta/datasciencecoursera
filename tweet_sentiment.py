@@ -26,11 +26,10 @@ def read_tweet(tweet_line):
 		tweet_text = tweet['text']
 	except:
 		tweet_text = ""
-	return tweet_text 
+	return tweet_text.encode('utf-8')
 	
 def calculate_tweet_score(tweet,scores):
 	""" Calculate tweet total sentiment """
-	tweet  = tweet.encode('utf-8')
 	tweet = tweet.split(" ")
 	tweet_score = 0
 	for word in tweet:
