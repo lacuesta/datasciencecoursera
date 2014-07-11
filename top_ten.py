@@ -2,7 +2,7 @@ import sys
 import json
 
 def read_tweet_hashtag(tweet_line):
-	""" convert json line to tweet text """
+	""" convert json line to hashtags list """
 	tweet = json.loads(tweet_line)
 	tweet_hashtags = []
 	try:
@@ -14,11 +14,14 @@ def read_tweet_hashtag(tweet_line):
 	return tweet_hashtags 
 	
 	
-def print_dictionary(dictionary):
-	for key in dictionary.keys():
-		print key," ",dictionary[key]
 
-
+def sort_dictionary(dictionary):
+	""" create a list of top ten hashtags from the dictionary """
+	sorted_list = []
+	for w in sorted(dictionary, key=dictionary.get, reverse=True):
+		sorted_list.append(w+" "+str(dictionary[w]))
+	return sorted_list[0:10]
+  	
 def main():
 	tweet_file = open(sys.argv[1])
 	hashtags_dict = {}
@@ -29,6 +32,9 @@ def main():
 				hashtags_dict[hashtag] += 1
 			else:
 				hashtags_dict[hashtag] = 1
-	print_dictionary(hashtags_dict)
+	#print_dictionary(hashtags_dict)
+	sorted_list = sort_dictionary(hashtags_dict)
+	for line in sorted_list:
+		print line
 if __name__ == '__main__':
     main()
